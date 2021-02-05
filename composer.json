@@ -1,0 +1,28 @@
+{
+    "name": "ludmanp/typicms-details",
+    "description": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mark Leidman",
+            "email": "mark@leidman.lv",
+            "homepage": "https://ludmanp.github.io"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "laravel/framework": "~8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TypiCMS\\Modules\\Details\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TypiCMS\\Modules\\Details\\DetailsServiceProvider"
+            ]
+        }
+    }
+}
