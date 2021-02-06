@@ -113,9 +113,6 @@ class CreateDetails extends Command
         $this->output->getFormatter()->setStyle('warning', $style);
         $style = new OutputFormatterStyle('cyan');
         $this->output->getFormatter()->setStyle('good', $style);
-//        $this->line('<warning>warning</warning> <info>info</info> <comment>comment</comment> <error>error</error> <good>good</good>');
-//        return;
-
 
         if (!preg_match('/^[a-z]+$/i', $this->argument('module'))) {
             return $this->error('Only alphabetic characters are allowed module.');
@@ -153,6 +150,7 @@ class CreateDetails extends Command
         $this->publishViews();
         $this->publishScssFiles();
         $this->moveMigrationFile();
+        $this->publishAdditionalTranslations();
         $this->addTranslations();
         $this->deleteResourcesDirectory();
 
@@ -191,7 +189,7 @@ class CreateDetails extends Command
     }
 
     /**
-     * Generate the module in Modules directory.
+     * Generate the module details in Modules directory.
      */
     private function publishModule()
     {
@@ -235,6 +233,23 @@ class CreateDetails extends Command
         //dd($from, $to);
 
         $this->files->move($from, $to);
+    }
+
+    /**
+     * Prepare additional translation files for details.
+     */
+    protected function publishAdditionalTranslations()
+    {
+        if(config('typicms.translations.details.stub')){
+            $from = base_path(config('typicms.translations.details.stub'));
+            $to = base_path('Modules/' . $this->module . '/resources/lang');
+
+            if ($this->files->isDirectory($from)) {
+                $this->publishDirectory($from, $to);
+            } else {
+                $this->error("Can’t locate path: <{$from}>");
+            }
+        }
     }
 
     /**
@@ -472,6 +487,14 @@ EOT;
         }
     }
 
+    /**
+     * Helper function to add new text lines
+     *
+     * @param $content
+     * @param $after
+     * @param $text
+     * @return int
+     */
     private function addToContent(&$content, $after, $text)
     {
         $count = 0;
