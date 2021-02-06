@@ -25,7 +25,7 @@
 
     <template slot="table-row" slot-scope="{ model, checkedModels, loading }">
         <td class="checkbox" v-if="$can('update objects')||$can('delete objects')"><item-list-checkbox :model="model" :checked-models-prop="checkedModels" :loading="loading"></item-list-checkbox></td>
-        <td v-if="$can('update objects')">@include('core::admin._button-edit', ['module' => 'objects'])</td>
+        <td v-if="$can('update objects')">@include('core::admin._button-edit', ['segment' => 'details', 'module' => 'object_details'])</td>
         <td><item-list-position-input :model="model"></item-list-position-input></td>
         <td><item-list-status-button :model="model"></item-list-status-button></td>
         <td><img :src="model.thumb" alt="" height="27"></td>
