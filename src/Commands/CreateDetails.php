@@ -209,7 +209,7 @@ class CreateDetails extends Command
     public function publishViews()
     {
         $from = base_path('Modules/' . $this->module . '/resources/views');
-        $to = resource_path('views/vendor/' . mb_strtolower($this->module));
+        $to = resource_path('views/vendor/' . $this->names->modules);
         $this->publishDirectory($from, $to);
     }
 
@@ -228,8 +228,8 @@ class CreateDetails extends Command
      */
     public function moveMigrationFile()
     {
-        $from = base_path('Modules/' . $this->module . '/database/migrations/create_' . $this->names->module . '_' . mb_strtolower($this->details) . '_table.php.stub');
-        $to = getMigrationFileName('create_' . mb_strtolower($this->module) . '_' . mb_strtolower($this->details) . '_table');
+        $from = base_path('Modules/' . $this->module . '/database/migrations/create_' . $this->names->module . '_' . $this->names->details . '_table.php.stub');
+        $to = getMigrationFileName('create_' . $this->names->module . '_' . $this->names->details . '_table');
         //dd($from, $to);
 
         $this->files->move($from, $to);
