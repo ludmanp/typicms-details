@@ -31,8 +31,8 @@ class DetailsApiController extends BaseApiController
 
     protected function updatePartial(Object $object, ObjectDetail $detail, Request $request)
     {
-        foreach ($request->only('status') as $key => $content) {
-            if ($detail->isTranslatableAttribute($key)) {
+        foreach ($request->only(['status', 'position']) as $key => $content) {
+            if (method_exists($detail, 'isTranslatableAttribute') && $detail->isTranslatableAttribute($key)) {
                 foreach ($content as $lang => $value) {
                     $detail->setTranslation($key, $lang, $value);
                 }
