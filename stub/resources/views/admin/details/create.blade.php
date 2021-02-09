@@ -10,7 +10,7 @@
     </div>
 
     {!! BootForm::open()->action(route('admin::store-object_detail', $object->id))->multipart()->role('form') !!}
-    @include('objects::admin.items._form')
+    @include('objects::admin.details._form')
     {!! BootForm::close() !!}
 
 @endsection
