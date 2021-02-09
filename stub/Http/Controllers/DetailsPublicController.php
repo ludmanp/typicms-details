@@ -14,7 +14,7 @@ class DetailsPublicController extends BasePublicController
         $object = Object::published()->whereSlugIs($slug)->firstOrFail();
         $model = ObjectDetail::published()->whereSlugIs($detailSlug)->where('object_id', $object->id)->firstOrFail();
 
-        return view('parents::public.details.show')
+        return view('objects::public.details.show')
             ->with(compact('model'));
     }
 }
