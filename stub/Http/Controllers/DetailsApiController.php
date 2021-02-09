@@ -17,7 +17,7 @@ class DetailsApiController extends BaseApiController
     public function index(Object $object, Request $request): LengthAwarePaginator
     {
         $data = QueryBuilder::for(ObjectDetail::class)
-            ->selectFields($request->input('fields.parents'))
+            ->selectFields($request->input('fields.object_details'))
             ->allowedSorts(['status_translated', 'title_translated', 'position'])
             ->allowedFilters([
                 AllowedFilter::custom('title', new FilterOr()),
