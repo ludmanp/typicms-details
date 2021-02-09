@@ -15,7 +15,7 @@ class DetailFormRequest extends AbstractFormRequest
             'status.*' => 'boolean',
             'summary.*' => 'nullable',
             'body.*' => 'nullable',
-            'objects_id' => 'required',
+            'object_id' => 'required',
         ];
     }
 }
