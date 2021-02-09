@@ -6,7 +6,7 @@
     title="details"
     include="image"
     appends="thumb"
-    :exportable="true"
+    :exportable="false"
     :searchable="['title']"
     :sorting="['position']">
 
