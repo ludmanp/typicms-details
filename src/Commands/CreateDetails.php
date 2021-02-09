@@ -406,10 +406,10 @@ EOT;
 
         $new_rows = <<<EOT
 
-            \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/create', [{$this->details}AdminController::class, 'create'])->name('admin::create-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
-            \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}/edit', [{$this->details}AdminController::class, 'edit'])->name('admin::edit-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
-            \$router->post('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}', [{$this->details}AdminController::class, 'store'])->name('admin::store-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
-            \$router->put('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}', [{$this->details}AdminController::class, 'update'])->name('admin::update-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
+            \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/create', [{$this->details}AdminController::class, 'create'])->name('create-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
+            \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}/edit', [{$this->details}AdminController::class, 'edit'])->name('edit-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
+            \$router->post('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}', [{$this->details}AdminController::class, 'store'])->name('store-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
+            \$router->put('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}', [{$this->details}AdminController::class, 'update'])->name('update-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
 EOT;
         $count = $this->addToContent($content,
             "\$router->put('{$this->names->modules}/{{$this->names->module}}', [AdminController::class, 'update'])->name('update-{$this->names->module}')->middleware('can:update {$this->names->modules}');", $new_rows
