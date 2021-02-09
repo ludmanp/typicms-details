@@ -22,7 +22,7 @@ class DetailsAdminController extends BaseAdminController
 
     public function edit(Object $object, ObjectDetail $detail): View
     {
-        return view('parents::admin.details.edit')
+        return view('objects::admin.details.edit')
             ->with(['model' => $detail, 'object' => $object]);
     }
 
