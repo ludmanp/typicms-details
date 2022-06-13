@@ -350,9 +350,9 @@ class CreateDetails extends Command
         }
         $total_count += $count;
 
-        $new_rows = '        $app->bind(\'' . $this->names->ModuleDetails . '\', ' . $this->names->ModuleDetail . '::class);';
+        $new_rows = '        $this->app->bind(\'' . $this->names->ModuleDetails . '\', ' . $this->names->ModuleDetail . '::class);';
         $count = $this->addToContent($content,
-            '$app->bind(\'' . $this->module . '\', ' . $this->names->Module . '::class);', $new_rows
+            '$this->app->bind(\'' . $this->module . '\', ' . $this->names->Module . '::class);', $new_rows
         );
         if (!$count) {
             $this->line('<warning>Bind for facade is not added</warning><info>, add manually to </info><comment>' . $path . '</comment>');
