@@ -3,6 +3,7 @@
 namespace TypiCMS\Modules\Details\Commands;
 
 use Illuminate\Console\Command;
+use League\Flysystem\Visibility;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -10,6 +11,7 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\MountManager;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
 
 class CreateDetails extends Command
 {
@@ -276,15 +278,19 @@ class CreateDetails extends Command
      */
     protected function publishDirectory($from, $to)
     {
+        $visibility = PortableVisibilityConverter::fromArray([], Visibility::PUBLIC);
+
         $manager = new MountManager([
             'from' => new Flysystem(new LocalFilesystemAdapter($from)),
-            'to' => new Flysystem(new LocalFilesystemAdapter($to)),
+            'to' => new Flysystem(new LocalFilesystemAdapter($to, $visibility)),
         ]);
 
         foreach ($manager->listContents('from://', true) as $file) {
-            if ($file['type'] === 'file' && (!$manager->has('to://' . $file['path']) || $this->option('force'))) {
-                $manager->write('to://' . str_replace($this->search, $this->replace, $file['path']),
-                    str_replace($this->search, $this->replace, $manager->read('from://' . $file['path'])));
+            $path = Str::after($file['path'], 'from://');
+            if ($file['type'] === 'file' && (!$manager->fileExists('to://' . $path) || $this->option('force'))) {
+                $content = str_replace($this->search, $this->replace, $manager->read($file['path']));
+                $location = str_replace($this->search, $this->replace, $path);
+                $manager->write('to://'. $location, $content);
             }
         }
     }
