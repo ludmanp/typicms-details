@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use League\Flysystem\Adapter\Local as LocalAdapter;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\MountManager;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -277,13 +277,13 @@ class CreateDetails extends Command
     protected function publishDirectory($from, $to)
     {
         $manager = new MountManager([
-            'from' => new Flysystem(new LocalAdapter($from)),
-            'to' => new Flysystem(new LocalAdapter($to)),
+            'from' => new Flysystem(new LocalFilesystemAdapter($from)),
+            'to' => new Flysystem(new LocalFilesystemAdapter($to)),
         ]);
 
         foreach ($manager->listContents('from://', true) as $file) {
             if ($file['type'] === 'file' && (!$manager->has('to://' . $file['path']) || $this->option('force'))) {
-                $manager->put('to://' . str_replace($this->search, $this->replace, $file['path']),
+                $manager->write('to://' . str_replace($this->search, $this->replace, $file['path']),
                     str_replace($this->search, $this->replace, $manager->read('from://' . $file['path'])));
             }
         }
