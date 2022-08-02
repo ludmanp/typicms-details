@@ -7,10 +7,11 @@ use League\Flysystem\Visibility;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use League\Flysystem\Adapter\Local as LocalAdapter;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\MountManager;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
 
 class CreateDetails extends Command
 {
@@ -277,15 +278,17 @@ class CreateDetails extends Command
      */
     protected function publishDirectory($from, $to)
     {
+        $visibility = PortableVisibilityConverter::fromArray([], Visibility::PUBLIC);
+
         $manager = new MountManager([
-            'from' => new Flysystem(new LocalAdapter($from)),
-            'to' => new Flysystem(new LocalAdapter($to)),
+            'from' => new Flysystem(new LocalFilesystemAdapter($from)),
+            'to' => new Flysystem(new LocalFilesystemAdapter($to, $visibility)),
         ]);
 
         foreach ($manager->listContents('from://', true) as $file) {
             $path = Str::after($file['path'], 'from://');
-            if ($file['type'] === 'file' && (!$manager->has('to://' . $path) || $this->option('force'))) {
-                $content = str_replace($this->search, $this->replace, $manager->read('from://'.$file['path']));
+            if ($file['type'] === 'file' && (!$manager->fileExists('to://' . $path) || $this->option('force'))) {
+                $content = str_replace($this->search, $this->replace, $manager->read($file['path']));
                 $location = str_replace($this->search, $this->replace, $path);
                 $manager->write('to://'. $location, $content);
             }
