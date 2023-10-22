@@ -326,9 +326,9 @@ class CreateDetails extends Command
         }
         $total_count += $count;
 
-        $new_rows = "        \$this->mergeConfigFrom(__DIR__.'/../config/config-{$this->names->details}.php', 'typicms.{$this->names->module}_{$this->names->details}');";
+        $new_rows = "        \$this->mergeConfigFrom(__DIR__ . '/../config/{$this->names->module}_{$this->names->details}.php', 'typicms.modules.{$this->names->module}_{$this->names->details}');";
         $count = $this->addToContent($content,
-            "\$this->mergeConfigFrom(__DIR__.'/../config/config.php', 'typicms.{$this->names->modules}');", $new_rows
+            "\$this->mergeConfigFrom(__DIR__ . '/../config/{$this->names->modules}.php', 'typicms.modules.{$this->names->modules}');", $new_rows
         );
         if (!$count) {
             $this->line('<warning>Config is not added</warning><info>, add manually to </info><comment>' . $path . '</comment>');
@@ -379,7 +379,7 @@ class CreateDetails extends Command
      */
     protected function updateRouteServiceProvider()
     {
-        $path = 'Modules/' . $this->module . '/Providers/RouteServiceProvider.php';
+        $path = 'Modules/' . $this->module . '/routes/' . $this->names->modules . '.php';
         $filePath = base_path($path);
         $content = file_get_contents($filePath);
 
@@ -412,10 +412,10 @@ EOT;
 
         $new_rows = <<<EOT
 
-            \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/create', [{$this->details}AdminController::class, 'create'])->name('create-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
-            \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}/edit', [{$this->details}AdminController::class, 'edit'])->name('edit-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
-            \$router->post('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}', [{$this->details}AdminController::class, 'store'])->name('store-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
-            \$router->put('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}', [{$this->details}AdminController::class, 'update'])->name('update-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
+    \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/create', [{$this->details}AdminController::class, 'create'])->name('create-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
+    \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}/edit', [{$this->details}AdminController::class, 'edit'])->name('edit-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
+    \$router->post('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}', [{$this->details}AdminController::class, 'store'])->name('store-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
+    \$router->put('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}', [{$this->details}AdminController::class, 'update'])->name('update-{$this->names->module}_{$this->names->detail}')->middleware('can:update {$this->names->modules}');
 EOT;
         $count = $this->addToContent($content,
             "\$router->put('{$this->names->modules}/{{$this->names->module}}', [AdminController::class, 'update'])->name('update-{$this->names->module}')->middleware('can:update {$this->names->modules}');", $new_rows
@@ -429,9 +429,9 @@ EOT;
 
         $new_rows = <<<EOT
 
-            \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}', [{$this->details}ApiController::class, 'index'])->middleware('can:update {$this->names->modules}');
-            \$router->patch('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}', [{$this->details}ApiController::class, 'updatePartial'])->middleware('can:update {$this->names->modules}');
-            \$router->delete('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}', [{$this->details}ApiController::class, 'destroy'])->middleware('can:update {$this->names->modules}');
+    \$router->get('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}', [{$this->details}ApiController::class, 'index'])->middleware('can:update {$this->names->modules}');
+    \$router->patch('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}', [{$this->details}ApiController::class, 'updatePartial'])->middleware('can:update {$this->names->modules}');
+    \$router->delete('{$this->names->modules}/{{$this->names->module}}/{$this->names->details}/{{$this->names->detail}}', [{$this->details}ApiController::class, 'destroy'])->middleware('can:update {$this->names->modules}');
 EOT;
 
         $count = $this->addToContent($content,
