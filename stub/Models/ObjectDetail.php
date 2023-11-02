@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Objects\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -49,9 +50,11 @@ class ObjectDetail extends Base implements Sortable
         'body',
     ];
 
-    public function getThumbAttribute(): string
+    protected function thumb(): Attribute
     {
-        return $this->present()->image(null, 54);
+        return new Attribute(
+            get: fn () => $this->present()->image(null, 54),
+        );
     }
 
     public function image(): BelongsTo
