@@ -1,16 +1,9 @@
 @extends('core::admin.master')
 
-@section('title', __('New detail'))
+@section('title', __('New object detail'))
 
 @section('content')
-
-    <div class="header">
-        @include('core::admin._button-back', ['url' => route('admin::edit-object', $object)])
-        <h1 class="header-title">@lang('New object')</h1>
-    </div>
-
-    {!! BootForm::open()->action(route('admin::store-object_detail', $object->id))->multipart()->role('form') !!}
+    {!! BootForm::open()->action(route('admin::store-object_detail', $object))->multipart()->role('form') !!}
     @include('objects::admin.details._form')
     {!! BootForm::close() !!}
-
 @endsection
