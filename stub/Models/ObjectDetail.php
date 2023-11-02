@@ -19,12 +19,14 @@ use TypiCMS\Modules\Objects\Presenters\DetailModulePresenter;
  * Class Detail
  * @package TypiCMS\Modules\Objects\Models
  *
- * @property string title
- * @property bool status
- * @property string slug
- * @property string summary
- * @property string body
- * @property integer object_id
+ * @property int $id
+ * @property int $position
+ * @property string $title
+ * @property bool $status
+ * @property string $slug
+ * @property string $summary
+ * @property string $body
+ * @property integer $object_id
  * @property Object object
  */
 class ObjectDetail extends Base implements Sortable
