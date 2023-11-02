@@ -10,9 +10,9 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
-use TypiCMS\Modules\Files\Models\File;
-use TypiCMS\Modules\Files\Traits\HasFiles;
-use TypiCMS\Modules\History\Traits\Historable;
+use TypiCMS\Modules\Core\Models\File;
+use TypiCMS\Modules\Core\Traits\HasFiles;
+use TypiCMS\Modules\Core\Traits\Historable;
 use TypiCMS\Modules\Objects\Presenters\DetailModulePresenter;
 
 /**
@@ -72,7 +72,10 @@ class ObjectDetail extends Base implements Sortable
         $locale = $locale ?: config('app.locale');
         $route = $locale.'::object-detail';
         if (Route::has($route)) {
-            return route($route, ['slug'=> $this->object->translate('slug', $locale), 'detailSlug' => $this->translate('slug', $locale)]);
+            return route($route, [
+                'slug'=> $this->object->translate('slug', $locale),
+                'detailSlug' => $this->translate('slug', $locale)
+            ]);
         }
 
         return '/';
