@@ -466,11 +466,17 @@ EOT;
         $content = trim($content);
 
         $count = 0;
+        // todo add HasMany includng import to model
         $new_rows = <<<EOT
 
     public function {$this->names->details}()
     {
         return \$this->hasMany({$this->names->Module}{$this->names->Detail}::class, '{$this->names->module}_id');
+    }
+
+    public function active{$this->names->Details}()
+    {
+        return \$this->{$this->names->details}()->published();
     }
 }
 EOT;
