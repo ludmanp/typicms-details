@@ -25,7 +25,7 @@
 
     <template slot="table-row" slot-scope="{ model, checkedModels, loading }">
         <td class="checkbox" v-if="$can('update objects')||$can('delete objects')"><item-list-checkbox :model="model" :checked-models-prop="checkedModels" :loading="loading"></item-list-checkbox></td>
-        <td v-if="$can('update products')">
+        <td v-if="$can('update objects')">
             <item-list-edit-button :url="'/admin/objects/{{ $model->id }}/details/' + model.id + '/edit'"></item-list-edit-button>
         </td>
         <td><item-list-position-input :model="model"></item-list-position-input></td>

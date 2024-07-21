@@ -13,7 +13,7 @@
 <div class="content">
     @include('core::admin._form-errors')
 
-    {!! BootForm::hidden('product_id')->value($object->id) !!}
+    {!! BootForm::hidden('object_id')->value($object->id) !!}
 
     <file-manager related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></file-manager>
     <file-field type="image" field="image_id" :init-file="{{ $model->image ?? 'null' }}"></file-field>
