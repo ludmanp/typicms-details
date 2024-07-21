@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Objects\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Core\Models\File;
+use TypiCMS\Modules\Core\Observers\SlugObserver;
 use TypiCMS\Modules\Core\Traits\HasFiles;
 use TypiCMS\Modules\Core\Traits\Historable;
 use TypiCMS\Modules\Objects\Presenters\DetailModulePresenter;
@@ -30,6 +32,7 @@ use TypiCMS\Modules\Objects\Presenters\DetailModulePresenter;
  * @property integer $object_id
  * @property Object object
  */
+#[ObservedBy(SlugObserver::class)]
 class ObjectDetail extends Base implements Sortable
 {
     use HasFiles;

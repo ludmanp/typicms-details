@@ -346,16 +346,6 @@ class CreateDetails extends Command
         }
         $total_count += $count;
 
-        $new_rows = '        ' . $this->names->ModuleDetail . '::observe(new SlugObserver());';
-        $count = $this->addToContent($content,
-            $this->names->Module . '::observe(new SlugObserver());', $new_rows
-        );
-        if (!$count) {
-            $this->line('<warning>SlugObserver for facade is not added</warning><info>, add manually to </info><comment>' . $path . '</comment>');
-            $this->line($new_rows);
-        }
-        $total_count += $count;
-
         $new_rows = '        $this->app->bind(\'' . $this->names->ModuleDetails . '\', ' . $this->names->ModuleDetail . '::class);';
         $count = $this->addToContent($content,
             '$this->app->bind(\'' . $this->module . '\', ' . $this->names->Module . '::class);', $new_rows
