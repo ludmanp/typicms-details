@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -16,14 +17,14 @@ class CreateObjectDetailsTable extends Migration
         Schema::create('object_details', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->integer('object_id')->unsigned();
-            $table->integer('image_id')->unsigned()->nullable();
+            $table->integer('object_id')->nullable()->constrained('objects')->nullOnDelete();;
+            $table->integer('image_id')->nullable()->constrained('files')->nullOnDelete();
             $table->integer('position')->unsigned()->default(0);
-            $table->json('status');
-            $table->json('title');
-            $table->json('slug');
-            $table->json('summary');
-            $table->json('body');
+            $table->json('status')->default(new Expression('(JSON_OBJECT())'));
+            $table->json('title')->default(new Expression('(JSON_OBJECT())'));
+            $table->json('slug')->default(new Expression('(JSON_OBJECT())'));
+            $table->json('summary')->default(new Expression('(JSON_OBJECT())'));
+            $table->json('body')->default(new Expression('(JSON_OBJECT())'));
             $table->timestamps();
         });
     }
