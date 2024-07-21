@@ -389,7 +389,7 @@ class CreateDetails extends Command
         $total_count += $count;
 
         $new_rows = <<<EOT
-                        \$router->get('{slug}/{{$this->names->detail}Slug}', [{$this->details}PublicController::class, 'show'])->name('{$this->names->module}-{$this->names->detail}');
+                \$router->get('{slug}/{{$this->names->detail}Slug}', [{$this->details}PublicController::class, 'show'])->name('{$this->names->module}-{$this->names->detail}');
 EOT;
         $count = $this->addToContent($content,
             "\$router->get('{slug}', [PublicController::class, 'show'])->name('{$this->names->module}');", $new_rows
