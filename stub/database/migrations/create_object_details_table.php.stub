@@ -17,7 +17,7 @@ class CreateObjectDetailsTable extends Migration
         Schema::create('object_details', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->integer('object_id')->nullable()->constrained('objects')->nullOnDelete();;
+            $table->integer('object_id')->nullable()->constrained('objects')->nullOnDelete();
             $table->integer('image_id')->nullable()->constrained('files')->nullOnDelete();
             $table->integer('position')->unsigned()->default(0);
             $table->json('status')->default(new Expression('(JSON_OBJECT())'));
